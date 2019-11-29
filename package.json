@@ -1,0 +1,38 @@
+{
+  "name": "@wisersolutions/intercom",
+  "version": "0.0.0",
+  "description": "Utils for integrating [Intercom](https://www.intercom.com/) into web applications.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WiserSolutions/intercom"
+  },
+  "author": "Wiser Solutions, Inc.",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "files": [
+    "/es",
+    "/lib"
+  ],
+  "scripts": {
+    "format": "prettier --write \"src/**/*.js\" --loglevel warn",
+    "lint": "eslint -f @wisersolutions/eslint-formatter-idea ./src",
+    "test": "echo \"This package has no tests.\"",
+    "build": "transpile-js",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@wisersolutions/eslint-config": "^2.0.1",
+    "@wisersolutions/eslint-formatter-idea": "^1.0.5",
+    "@wisersolutions/transpile-js": "^0.0.17",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.7.1",
+    "eslint-config-prettier": "^6.7.0",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.7.4",
+    "core-js": "^3.4.5"
+  }
+}
