@@ -1,6 +1,6 @@
 {
   "name": "@wisersolutions/intercom",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utils for integrating [Intercom](https://www.intercom.com/) into web applications.",
   "repository": {
     "type": "git",
