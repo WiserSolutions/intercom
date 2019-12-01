@@ -1,1 +1,2 @@
-// TODO: put your module entry point here
+export * from './intercom'
+export * from './useIntercom'
