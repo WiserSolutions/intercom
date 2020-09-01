@@ -72,4 +72,8 @@ export function hideIntercom() {
   Intercom('hide')
 }
 
+export function startIntercomTour(tourId) {
+  Intercom('startTour', tourId)
+}
+
 // endregion
