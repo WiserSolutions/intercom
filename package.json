@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/WiserSolutions/intercom"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Wiser Solutions, Inc.",
   "contributors": [
     "Jan Konopásek"
