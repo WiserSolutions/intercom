@@ -16,7 +16,7 @@ jobs:
           node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@wisersolutions'
-      - run: npm i --frozen-lockfile
+      - run: npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
       - run: npm run build
