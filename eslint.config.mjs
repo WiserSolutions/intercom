@@ -22,7 +22,6 @@ export default [
       browser: true,
     },
   }),
-
   // Ignore build outputs and deps
   {
     ignores: ['lib/**', 'es/**', 'node_modules/**'],
