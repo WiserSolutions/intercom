@@ -15,10 +15,10 @@ jobs:
           node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@wisersolutions'
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
-      - run: npm run lint
+      - run: yarn lint
 
   tests:
     name: tests
@@ -31,10 +31,10 @@ jobs:
           node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@wisersolutions'
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
-      - run: npm run test
+      - run: yarn test
       - name: Report deployment to OpsLevel (CI test)
         env:
           OPSLEVEL_ROUTING_ID: ${{ secrets.OPSLEVEL_ROUTING_ID }}
