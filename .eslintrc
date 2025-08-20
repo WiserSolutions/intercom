@@ -1,6 +1,0 @@
-{
-  "extends": "@wisersolutions",
-  "env": {
-    "browser": true
-  }
-}

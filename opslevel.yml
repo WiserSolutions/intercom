@@ -1,0 +1,21 @@
+component:
+  name: Intercom
+  description: "Utils for integrating [Intercom](https://www.intercom.com/) into web applications."
+  type: library
+  owner: online_engineering
+  domain: shared
+  lifecycle: generally_available
+  framework: React
+  tier: tier_3
+  language: JavaScript
+  system: shared_2
+  product: Shared
+  aliases:
+    - intercom
+  tags:
+    - key: shared
+      value: "true"
+    - key: platform
+      value: "true"
+    - key: type
+      value: "frontend"

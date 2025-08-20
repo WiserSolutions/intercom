@@ -21,29 +21,34 @@
     "/lib"
   ],
   "scripts": {
-    "format": "prettier --write \"src/**/*.js\" --loglevel warn",
+    "format": "prettier --write \"src/**/*.js\" --log-level warn",
     "lint": "eslint -f @wisersolutions/eslint-formatter-idea ./src",
-    "test": "echo \"This package has no tests.\"",
+    "test": "jest",
     "build": "transpile-js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@wisersolutions/eslint-config": "^2.0.6",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.33.0",
+    "@wisersolutions/eslint-config": "^3.1.0",
     "@wisersolutions/eslint-formatter-idea": "^1.0.8",
     "@wisersolutions/transpile-js": "^0.0.19",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^24.9.0",
-    "eslint": "^6.7.1",
-    "eslint-config-prettier": "^6.7.0",
-    "prettier": "^1.19.1"
+    "jest": "^30.0.0",
+    "babel-jest": "^30.0.5",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "regenerator-runtime": "^0.14.1"
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.7.4",
-    "@hon2a/use-object-memo": "1.0.0",
-    "core-js": "^3.4.5",
-    "react-use": "^13.10.0"
+    "@babel/runtime-corejs3": "^7.28.3",
+    "core-js": "^3.45.0",
+    "react-use": "^17.6.0"
   },
   "peerDependencies": {
-    "react": "^17.0.2"
-  }
+    "react": ">=18",
+    "core-js": ">=3"
+  },
+  "packageManager": "yarn@1.22.22"
 }

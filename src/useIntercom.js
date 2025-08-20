@@ -1,8 +1,14 @@
-import { useEffect } from 'react'
-import { useObjectMemo } from '@hon2a/use-object-memo'
+import { useEffect, useRef } from 'react'
 import useAsyncFn from 'react-use/lib/useAsyncFn'
 
 import { loadIntercom, startIntercom, stopIntercom, updateIntercom } from './intercom'
+import { shallowEqual } from './utils/shallowEqual'
+
+const useObjectMemo = (value) => {
+  const ref = useRef(value)
+  if (!shallowEqual(ref.current, value)) ref.current = value
+  return ref.current
+}
 
 export const useIntercom = (appId, settings = {}) => {
   const settingsMemo = useObjectMemo(settings)

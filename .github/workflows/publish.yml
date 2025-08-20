@@ -10,16 +10,34 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@wisersolutions'
-      - uses: actions/checkout@master
-      - run: npm i --frozen-lockfile
+      - run: yarn install --frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run build
-      - run: npm publish
+          NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
+      - run: yarn build
+      - run: yarn publish --non-interactive
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
+
+      - name: Report deployment to OpsLevel
+        env:
+          OPSLEVEL_ROUTING_ID: ${{ secrets.OPSLEVEL_ROUTING_ID }}
+          SERVICE_ALIAS: intercom
+          ENVIRONMENT: published
+          STATUS: ${{ job.status }}
+          SHA: ${{ github.sha }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          STARTED_AT=$(date -u '+%FT%TZ')
+          DEPLOYED_AT=$(date -u '+%FT%TZ')
+          DEDUP_ID="${GITHUB_RUN_ID}-${GITHUB_REF_NAME}"
+          curl -sS -i -X POST "https://app.opslevel.com/integrations/deploy/" \
+            -H "Content-Type: application/json" \
+            -H "X-OpsLevel-Routing-ID: ${OPSLEVEL_ROUTING_ID}" \
+            -d "{\"dedup_id\":\"${DEDUP_ID}\",\"service\":\"${SERVICE_ALIAS}\",\"deployer\":{\"name\":\"${ACTOR}\"},\"started_at\":\"${STARTED_AT}\",\"deployed_at\":\"${DEPLOYED_AT}\",\"environment\":\"${ENVIRONMENT}\",\"description\":\"Published ${GITHUB_REF_NAME} to GitHub Packages\",\"deploy_url\":\"${BUILD_URL}\",\"status\":\"${STATUS}\",\"commit\":{\"sha\":\"${SHA}\"}}"

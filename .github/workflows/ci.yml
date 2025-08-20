@@ -7,29 +7,47 @@ jobs:
   lint:
     name: lint
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-        registry-url: https://npm.pkg.github.com/
-        scope: '@wisersolutions'
-    - run: npm i
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: npm run lint
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@wisersolutions'
+      - run: yarn install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
+      - run: yarn lint
 
   tests:
     name: tests
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '24'
           registry-url: https://npm.pkg.github.com/
           scope: '@wisersolutions'
-      - run: npm i
+      - run: yarn install --frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run test
+          NODE_AUTH_TOKEN: ${{ secrets.WISER_PACKAGES }}
+      - run: yarn test
+      - name: Report deployment to OpsLevel (CI test)
+        env:
+          OPSLEVEL_ROUTING_ID: ${{ secrets.OPSLEVEL_ROUTING_ID }}
+          SERVICE_ALIAS: intercom
+          ENVIRONMENT: test
+          SHA: ${{ github.sha }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          STARTED_AT=$(date -u '+%FT%TZ')
+          DEPLOYED_AT=$(date -u '+%FT%TZ')
+          DEDUP_ID="${GITHUB_RUN_ID}-${GITHUB_REF_NAME:-ci}"
+          curl -sS -i -X POST "https://app.opslevel.com/integrations/deploy/" \
+            -H "Content-Type: application/json" \
+            -H "X-OpsLevel-Routing-ID: ${OPSLEVEL_ROUTING_ID}" \
+            -d "{\"dedup_id\":\"${DEDUP_ID}\",\"service\":\"${SERVICE_ALIAS}\",\"deployer\":{\"name\":\"${ACTOR}\"},\"started_at\":\"${STARTED_AT}\",\"deployed_at\":\"${DEPLOYED_AT}\",\"environment\":\"${ENVIRONMENT}\",\"description\":\"CI test run ${GITHUB_RUN_ID}\",\"deploy_url\":\"${BUILD_URL}\",\"status\":\"succeeded\",\"commit\":{\"sha\":\"${SHA}\"}}"
