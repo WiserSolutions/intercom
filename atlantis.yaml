@@ -1,0 +1,35 @@
+
+---
+version: 3
+projects:
+- name: test
+  dir: path/to/your/terraform/code/
+  terraform_version: 1.5
+  workflow: tfvars_test
+  autoplan:
+    when_modified:
+    - "*.tf"
+    - "test.tfvars"
+- name: prod
+  dir: path/to/your/terraform/code/
+  terraform_version: 1.5
+  workflow: tfvars_prod
+  autoplan:
+    when_modified:
+    - "*.tf"
+    - "prod.tfvars"
+- name: plain_terraform
+  dir: path/to/your/terraform/code/
+  terraform_version: 1.5
+  workflow: plain
+  autoplan:
+    when_modified:
+    - "*.tf"
+- name: terragrunt
+  dir: path/to/your/terragrunt/code/
+  terraform_version: 1.5
+  workflow: terragrunt
+  autoplan:
+    when_modified:
+    - "*.hcl"
+    - "*.tf"
