@@ -1,4 +1,5 @@
 /* eslint-env jest */
+/* global describe, test, expect */
 import { shallowEqual } from '../../utils/shallowEqual'
 
 describe('shallowEqual', () => {
