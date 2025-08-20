@@ -23,10 +23,14 @@ export const AppRoot = ({ intercomId: appId, ...props }) => {
 To integrate Intercom into an app that's not using React, import just the loader code and load it.
 
 ```javascript
-import { loadIntercom, startIntercom } from '@wisersolutions/intercom/lib/intercom'
+import { loadIntercom, startIntercom } from '@wisersolutions/intercom'
 
 loadIntercom(appId).then(() => startIntercom(appId, { /* settings or user identity if needed */ }))
 ```
+
+## Requirements
+
+- React 17 (peer dependency): `"react": "^17.0.2"`
 
 ## Development
 
@@ -49,6 +53,8 @@ and fix the errors, if there are any.
 
 ### Publish
 
+This package is configured to publish to GitHub Packages (`publishConfig.registry`). Ensure your `.npmrc` is set up with a GitHub token that has the appropriate scope.
+
 Publishing is done in two steps:
 
 1. Create a new version tag and push it to the repository:
@@ -56,7 +62,7 @@ Publishing is done in two steps:
     npm version <patch|minor|major>
     git push --follow-tags
     ```
-1. Build and publish the new version as a npm package:
+1. Publish the new version as a package (build runs via `prepublishOnly`):
     ```sh
-    npm publish --access public
+    npm publish
     ``` 
