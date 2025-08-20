@@ -9,17 +9,17 @@ if (typeof Intercom === 'function') {
   Intercom('reattach_activator')
   Intercom('update', window.intercomSettings)
 } else {
-  Intercom = function() {
+  Intercom = function () {
     Intercom.c(arguments)
   }
   Intercom.q = []
-  Intercom.c = args => {
+  Intercom.c = (args) => {
     Intercom.q.push(args)
   }
   window.Intercom = Intercom
 }
 
-export const loadIntercom = appId =>
+export const loadIntercom = (appId) =>
   new Promise((resolve, reject) => {
     const loadScript = () => {
       const scriptNode = Object.assign(document.createElement('script'), {
@@ -27,7 +27,7 @@ export const loadIntercom = appId =>
         async: true,
         src: `https://widget.intercom.io/widget/${appId}`,
         onload: () => resolve(Intercom),
-        onerror: reject
+        onerror: reject,
       })
       const refNode = document.getElementsByTagName('script')[0]
       refNode.parentNode.insertBefore(scriptNode, refNode)
