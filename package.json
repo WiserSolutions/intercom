@@ -23,7 +23,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.js\" --log-level warn",
     "lint": "eslint -f @wisersolutions/eslint-formatter-idea ./src",
-    "test": "echo \"This package has no tests.\"",
+    "test": "jest",
     "build": "transpile-js",
     "prepublishOnly": "npm run build"
   },
@@ -33,6 +33,7 @@
     "@wisersolutions/eslint-config": "^3.1.0",
     "@wisersolutions/eslint-formatter-idea": "^1.0.8",
     "@wisersolutions/transpile-js": "^0.0.19",
+    "jest": "^30.0.0",
     "babel-jest": "^30.0.5",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
@@ -42,7 +43,6 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.28.3",
-    "@hon2a/use-object-memo": "1.1.0",
     "core-js": "^3.45.0",
     "react-use": "^17.6.0"
   },
